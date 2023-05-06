@@ -25,16 +25,20 @@ async function getFilePaths(dirPath, ext) {
 }
 
 async function makeStyleBundle(dir, bundle) {
-  const cssFilePaths = await getFilePaths(dir, CSS_EXT);
-  const writer = fs.createWriteStream(bundle);
-  for (const path of cssFilePaths) {
-    const reader = fs.createReadStream(path);
-    await new Promise((resolve, reject) => {
-      reader.pipe(writer, { end: false }).on('error', (err) => reject(err));
-      reader.on('end', resolve);
-    });
+  try {
+    const cssFilePaths = await getFilePaths(dir, CSS_EXT);
+    const writer = fs.createWriteStream(bundle);
+    for (const path of cssFilePaths) {
+      const reader = fs.createReadStream(path);
+      await new Promise((resolve, reject) => {
+        reader.pipe(writer, { end: false }).on('error', (err) => reject(err));
+        reader.on('end', resolve);
+      });
+    }
+    writer.close();
+  } catch(err) {
+    console.error(err);
   }
-  writer.close();
 }
 
 makeStyleBundle(stylesDirPath, bundleFilePath);
