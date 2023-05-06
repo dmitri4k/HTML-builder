@@ -42,3 +42,8 @@ async function makeStyleBundle(dir, bundle) {
 }
 
 makeStyleBundle(stylesDirPath, bundleFilePath);
+
+module.exports = {
+  getFilePaths,
+  makeStyleBundle,
+};

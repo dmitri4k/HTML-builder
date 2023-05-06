@@ -27,3 +27,5 @@ async function copyDirectory(source, destination) {
 }
 
 copyDirectory(directoryPath, copyDirectoryPath);
+
+module.exports = copyDirectory;
